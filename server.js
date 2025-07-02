@@ -38,6 +38,7 @@ const reportRoutes = require("./routes/reportRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
 const attributeRoutes = require("./routes/attributeRoutes");
 const scheduleRoutes = require("./routes/schedulesRoutes"); // ✅ Nueva ruta para horarios
+const rubricRoutes = require("./routes/rubricRoutes");
 
 // ✅ Rutas
 app.use("/api/auth", authRoutes); // ✅ Activar autenticación
@@ -52,6 +53,7 @@ app.use("/api/reports", reportRoutes);
 app.use("/api/suppliers", supplierRoutes);
 app.use("/api/attributes", attributeRoutes);
 app.use("/api/schedules", scheduleRoutes); // ✅ Agregar ruta de horarios
+app.use("/api/rubrics", rubricRoutes);
 
 // ✅ Iniciar servidor
 app.listen(PORT, () => {

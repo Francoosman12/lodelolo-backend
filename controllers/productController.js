@@ -150,7 +150,7 @@ if (!fechaFinal || isNaN(fechaFinal.getTime())) {
 
 const parsePrecio = (valor) => {
   if (!valor) return 0;
-  return parseFloat(valor.replace(/\./g, "").replace(",", "."));
+  return parseFloat(valor.replace(/[^\d,]/g, "").replace(/\./g, "").replace(",", "."));
 };
 
 // Actualizar un producto existente
@@ -160,6 +160,15 @@ const updateProduct = async (req, res) => {
     let imagen_url = req.body.imagen_url; // ✅ Mantener imagen anterior si no se actualiza
 
 console.log("📝 req.body recibido:", req.body);
+
+if (typeof req.body.atributos === "string") {
+  try {
+    req.body.atributos = JSON.parse(req.body.atributos);
+  } catch (err) {
+    return res.status(400).json({ message: "⚠️ Atributos mal formateados" });
+  }
+}
+
 console.log("📷 req.file recibido:", req.file); // 🔍 Ver si la imagen llega correctamente
 
     // ✅ Verificar que la sucursal existe antes de actualizar

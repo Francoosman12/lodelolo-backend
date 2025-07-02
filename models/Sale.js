@@ -12,7 +12,11 @@ const saleSchema = new mongoose.Schema({
   ],
   total: { type: Number, required: true },
   metodo_pago: {
-    tipo: { type: String, enum: ['tarjeta', 'efectivo', 'combinado'], required: true },
+    tipo: {
+      type: String,
+      enum: ['tarjeta', 'efectivo', 'combinado'],
+      required: true
+    },
     detalles: {
       tarjeta: {
         tipo: { type: String, enum: ['credito', 'debito', 'transferencia'] },
@@ -24,7 +28,10 @@ const saleSchema = new mongoose.Schema({
       },
     },
   },
-  fecha_venta: { type: Date, default: Date.now },
+  comentario: { type: String, default: "" },
+  direccion_entrega: { type: String, default: "" },
+  cliente: { type: String, trim: true },
+ fecha_venta: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('Sale', saleSchema);

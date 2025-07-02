@@ -61,7 +61,16 @@ const createSale = async (req, res) => {
   try {
     console.log("🛒 Datos recibidos en el backend:", req.body);
 
-    const { id_vendedor, sucursal, productos, total, metodo_pago } = req.body;
+    const {
+  id_vendedor,
+  sucursal,
+  productos,
+  total,
+  metodo_pago,
+  comentario,
+  direccion_entrega,
+  cliente
+} = req.body;
 
     if (!id_vendedor || !sucursal || !productos || productos.length === 0 || !total || !metodo_pago) {
       return res.status(400).json({ message: "Faltan datos en la solicitud de venta." });
@@ -87,13 +96,16 @@ const createSale = async (req, res) => {
 
     // ✅ Si pasó la validación, proceder con la venta
     const newSale = new Sale({
-      id_vendedor,
-      sucursal,
-      productos,
-      cantidad_vendida: productos.reduce((sum, item) => sum + item.cantidad_vendida, 0),
-      total: mongoose.Types.Decimal128.fromString(total.toString()),
-      metodo_pago,
-    });
+  id_vendedor,
+  sucursal,
+  productos,
+  cantidad_vendida: productos.reduce((sum, item) => sum + item.cantidad_vendida, 0),
+  total: mongoose.Types.Decimal128.fromString(total.toString()),
+  metodo_pago,
+  comentario: comentario || "",
+  direccion_entrega: direccion_entrega || "",
+  cliente: cliente || ""
+});
 
     const savedSale = await newSale.save();
 
