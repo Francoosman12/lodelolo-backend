@@ -7,9 +7,9 @@ const openCash = async (req, res) => {
   try {
     const { sucursal, responsable, monto, comentario } = req.body;
 
-    if (!sucursal || !responsable || !monto) {
-      return res.status(400).json({ message: "Faltan datos para apertura de caja." });
-    }
+    if (!sucursal || !responsable || typeof monto !== "number") {
+  return res.status(400).json({ message: "Faltan datos para apertura de caja." });
+}
 
     const apertura = new CashMovement({
       tipo: "apertura",
