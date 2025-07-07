@@ -1,4 +1,4 @@
-const express = require("express");
+express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const multer = require("multer"); // ✅ Manejo de imágenes
@@ -39,6 +39,8 @@ const supplierRoutes = require("./routes/supplierRoutes");
 const attributeRoutes = require("./routes/attributeRoutes");
 const scheduleRoutes = require("./routes/schedulesRoutes"); // ✅ Nueva ruta para horarios
 const rubricRoutes = require("./routes/rubricRoutes");
+const cashRoutes = require("./routes/cashRoutes");
+
 
 // ✅ Rutas
 app.use("/api/auth", authRoutes); // ✅ Activar autenticación
@@ -54,6 +56,7 @@ app.use("/api/suppliers", supplierRoutes);
 app.use("/api/attributes", attributeRoutes);
 app.use("/api/schedules", scheduleRoutes); // ✅ Agregar ruta de horarios
 app.use("/api/rubrics", rubricRoutes);
+app.use("/api/cash", cashRoutes);
 
 // ✅ Iniciar servidor
 app.listen(PORT, () => {

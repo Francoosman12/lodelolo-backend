@@ -109,6 +109,22 @@ const createSale = async (req, res) => {
 
     const savedSale = await newSale.save();
 
+    // 📥 Registrar movimiento de caja por venta
+const CashMovement = require("../models/CashMovement"); // Asegurate de importar el modelo
+
+const movimientoVenta = new CashMovement({
+  tipo: "venta",
+  concepto: `Venta a ${cliente || "cliente sin nombre"}`,
+  monto: parseFloat(total),
+  sucursal,
+  responsable: id_vendedor,
+  metodo_pago: metodo_pago.tipo || "efectivo",
+  comentario: comentario || `Venta registrada automáticamente`,
+  fecha_movimiento: new Date()
+});
+
+await movimientoVenta.save();
+
     // ✅ Restar stock a los productos vendidos
     for (const { producto, cantidad_vendida } of productosValidos) {
       await Product.findByIdAndUpdate(producto._id, {
